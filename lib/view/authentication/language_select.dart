@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sajilyatra/view/authentication/widgets/language_card.dart';
 
 class LanguageSelectScreen extends StatefulWidget {
   const LanguageSelectScreen({super.key});
@@ -8,6 +9,8 @@ class LanguageSelectScreen extends StatefulWidget {
 }
 
 class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
+  String selectedLanguage = 'English';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +71,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
 
               // Tagline
               const Text(
-                'Every bus and micro and Safa Tempo in Kathmandu Valley, live on one map.',
+                'Every bus, micro and Safa Tempo in Kathmandu Valley, live on one map.',
                 style: TextStyle(
                   color: Color(0xFF8E999E),
                   fontSize: 14,
@@ -76,7 +79,43 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                 ),
               ),
 
-              const Spacer(flex: 6),
+              const SizedBox(height: 28),
+
+              // Section header
+              const Text(
+                'CHOOSE YOUR LANGUAGE',
+                style: TextStyle(
+                  color: Color(0xFF6F7B80),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1.1,
+                ),
+              ),
+
+              const SizedBox(height: 12),
+
+              // Language options
+              LanguageCard(
+                label: 'English',
+                isSelected: selectedLanguage == 'English',
+                onTap: () {
+                  setState(() {
+                    selectedLanguage = 'English';
+                  });
+                },
+              ),
+              const SizedBox(height: 12),
+              LanguageCard(
+                label: 'नेपाली',
+                isSelected: selectedLanguage == 'नेपाली',
+                onTap: () {
+                  setState(() {
+                    selectedLanguage = 'नेपाली';
+                  });
+                },
+              ),
+
+              const Spacer(flex: 5),
             ],
           ),
         ),
