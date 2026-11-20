@@ -115,7 +115,62 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                 },
               ),
 
-              const Spacer(flex: 5),
+              const Spacer(flex: 4),
+
+              // Get started button
+              SizedBox(
+                width: double.infinity,
+                height: 54,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // TODO: Hook up with your ViewModel / next screen navigation
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF28B89D),
+                    foregroundColor: const Color(0xFF061310),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28),
+                    ),
+                  ),
+                  child: const Text(
+                    'Get started',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 14),
+
+              // Login prompt
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Already have an account? ',
+                    style: TextStyle(
+                      color: Color(0xFF7B878C),
+                      fontSize: 13,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // TODO: Navigate to login screen
+                    },
+                    child: const Text(
+                      'Log in',
+                      style: TextStyle(
+                        color: Color(0xFF28B89D),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
