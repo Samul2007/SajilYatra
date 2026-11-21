@@ -112,6 +112,36 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                   });
                 },
               ),
+
+              const Spacer(),
+
+              // Continue button
+              SizedBox(
+                width: double.infinity,
+                height: 54,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // TODO: Navigate to registration / login with selectedRole
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF28B89D),
+                    foregroundColor: const Color(0xFF061310),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28),
+                    ),
+                  ),
+                  child: const Text(
+                    'Continue',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 12),
             ],
           ),
         ),
