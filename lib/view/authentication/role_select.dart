@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sajilyatra/view/authentication/register_screen.dart';
 import 'package:sajilyatra/view/authentication/widgets/role_card.dart';
 
 class RoleSelectScreen extends StatefulWidget {
@@ -121,7 +122,12 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                 height: 54,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Navigate to registration / login with selectedRole
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => RegisterScreen(role: selectedRole),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF28B89D),
