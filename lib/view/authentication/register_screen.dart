@@ -191,6 +191,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fontSize: 16, fontWeight: FontWeight.w700)),
                   ),
                 ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  height: 54,
+                  child: OutlinedButton(
+                    // TODO: navigate to the home screen once it exists.
+                    onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Continuing as guest')),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: _border, width: 1.5),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28)),
+                    ),
+                    child: const Text('Continue as guest',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600)),
+                  ),
+                ),
               ],
             ),
           ),
