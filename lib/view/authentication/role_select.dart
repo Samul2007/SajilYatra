@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sajilyatra/view/authentication/widgets/role_card.dart';
+import 'package:sajilyatra/view/authentication/login_screen.dart';
 
 class RoleSelectScreen extends StatefulWidget {
   const RoleSelectScreen({super.key});
@@ -116,12 +117,18 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
               const Spacer(),
 
               // Continue button
+              // Continue button
               SizedBox(
                 width: double.infinity,
                 height: 54,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Navigate to registration / login with selectedRole
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF28B89D),

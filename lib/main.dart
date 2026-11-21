@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sajilyatra/view/authentication/language_select.dart';
+import 'view/authentication/language_select.dart';
+// To preview the other screens, swap the `home:` line below:
+// import 'view/authentication/role_select.dart';   -> RoleSelectScreen()
+// import 'view/authentication/login_screen.dart';  -> LoginScreen()
 
 void main() {
   runApp(const MyApp());
