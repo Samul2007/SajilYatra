@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sajilyatra/view/authentication/role_select.dart';
 import 'package:sajilyatra/view/authentication/widgets/language_card.dart';
 
 class LanguageSelectScreen extends StatefulWidget {
@@ -123,7 +124,12 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                 height: 54,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Hook up with your ViewModel / next screen navigation
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RoleSelectScreen(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF28B89D),
