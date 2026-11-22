@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sajilyatra/constants/app_colors.dart';
 
 class RoleCard extends StatelessWidget {
   final IconData icon;
@@ -18,10 +19,10 @@ class RoleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color activeBorder = const Color(0xFF238C78);
-    final Color inactiveBorder = const Color(0xFF262D30);
-    final Color activeBg = const Color(0xFF0E2623);
-    final Color inactiveBg = const Color(0xFF15191B);
+    final Color activeBorder = kAccent;
+    final Color inactiveBorder = kBorder;
+    final Color activeBg = kCardActive;
+    final Color inactiveBg = kCard;
 
     return InkWell(
       onTap: onTap,
@@ -43,15 +44,15 @@ class RoleCard extends StatelessWidget {
               height: 44,
               decoration: BoxDecoration(
                 color: isSelected
-                    ? const Color(0xFF163D38)
-                    : const Color(0xFF1E2427),
+                    ? kAccent
+                    : kBorder,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 icon,
                 color: isSelected
-                    ? const Color(0xFF28B89D)
-                    : const Color(0xFF8E999E),
+                    ? kOnAccent
+                    : kMuted,
                 size: 22,
               ),
             ),
@@ -63,7 +64,7 @@ class RoleCard extends StatelessWidget {
                   Text(
                     title,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: kText,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
@@ -72,7 +73,7 @@ class RoleCard extends StatelessWidget {
                   Text(
                     subtitle,
                     style: const TextStyle(
-                      color: Color(0xFF8E999E),
+                      color: kMuted,
                       fontSize: 12.5,
                     ),
                   ),
@@ -82,7 +83,7 @@ class RoleCard extends StatelessWidget {
             if (isSelected)
               Icon(
                 Icons.check_circle,
-                color: activeBorder,
+                color: kViolet,
                 size: 22,
               ),
           ],

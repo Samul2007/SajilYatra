@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sajilyatra/constants/app_colors.dart';
 import 'package:sajilyatra/view/authentication/register_screen.dart';
 import 'package:sajilyatra/view/authentication/widgets/role_card.dart';
 
@@ -15,12 +16,12 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0E0F),
+      backgroundColor: kBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: kText),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -35,7 +36,7 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
               const Text(
                 'Choose your profile',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: kText,
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   letterSpacing: -0.5,
@@ -45,7 +46,7 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
               const Text(
                 'Select how you travel or operate in Kathmandu Valley so we can tailor fares and routes for you.',
                 style: TextStyle(
-                  color: Color(0xFF8E999E),
+                  color: kMuted,
                   fontSize: 14,
                   height: 1.4,
                 ),
@@ -56,7 +57,7 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
               const Text(
                 'SELECT ROLE',
                 style: TextStyle(
-                  color: Color(0xFF6F7B80),
+                  color: kMuted,
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 1.1,
@@ -130,8 +131,8 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF28B89D),
-                    foregroundColor: const Color(0xFF061310),
+                    backgroundColor: kAccent,
+                    foregroundColor: kOnAccent,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),

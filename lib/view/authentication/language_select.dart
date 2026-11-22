@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sajilyatra/constants/app_colors.dart';
 import 'package:sajilyatra/view/authentication/role_select.dart';
 import 'package:sajilyatra/view/authentication/widgets/language_card.dart';
 
@@ -15,7 +16,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0B0E0F),
+      backgroundColor: kBg,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
@@ -35,8 +36,8 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Color(0xFF43C6AC),
-                      Color(0xFF145A52),
+                      Color(0xFFFFE552),
+                      kAccent,
                     ],
                   ),
                 ),
@@ -52,7 +53,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               const Text(
                 'Sajil Yatra',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: kText,
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
                   letterSpacing: -0.5,
@@ -62,7 +63,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               const Text(
                 'सजिल यात्रा',
                 style: TextStyle(
-                  color: Color(0xFFD97724),
+                  color: kViolet,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
@@ -74,7 +75,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               const Text(
                 'Every bus, micro and Safa Tempo in Kathmandu Valley, live on one map.',
                 style: TextStyle(
-                  color: Color(0xFF8E999E),
+                  color: kMuted,
                   fontSize: 14,
                   height: 1.4,
                 ),
@@ -86,7 +87,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               const Text(
                 'CHOOSE YOUR LANGUAGE',
                 style: TextStyle(
-                  color: Color(0xFF6F7B80),
+                  color: kMuted,
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 1.1,
@@ -132,8 +133,8 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF28B89D),
-                    foregroundColor: const Color(0xFF061310),
+                    backgroundColor: kAccent,
+                    foregroundColor: kOnAccent,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28),
@@ -158,7 +159,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                   const Text(
                     'Already have an account? ',
                     style: TextStyle(
-                      color: Color(0xFF7B878C),
+                      color: kMuted,
                       fontSize: 13,
                     ),
                   ),
@@ -169,7 +170,7 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                     child: const Text(
                       'Log in',
                       style: TextStyle(
-                        color: Color(0xFF28B89D),
+                        color: kViolet,
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                       ),
