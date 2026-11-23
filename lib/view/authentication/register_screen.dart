@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sajilyatra/constants/app_colors.dart';
+import 'package:sajilyatra/view/authentication/login_screen.dart';
+import 'package:sajilyatra/view/tracking/live_tracking_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   final String role;
@@ -188,9 +190,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: double.infinity,
                   height: 54,
                   child: OutlinedButton(
-                    // TODO: navigate to the home screen once it exists.
-                    onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Continuing as guest')),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const LiveTrackingScreen()),
                     ),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: kText,
@@ -201,6 +204,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: const Text('Continue as guest',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600)),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Center(
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LoginScreen()),
+                    ),
+                    child: const Text.rich(
+                      TextSpan(
+                        text: 'Already have an account? ',
+                        style: TextStyle(color: kMuted),
+                        children: [
+                          TextSpan(
+                              text: 'Log in',
+                              style: TextStyle(
+                                  color: kViolet,
+                                  fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
