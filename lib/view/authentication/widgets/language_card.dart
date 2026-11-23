@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sajilyatra/constants/app_colors.dart';
 
 class LanguageCard extends StatelessWidget {
   final String label;
@@ -14,10 +15,10 @@ class LanguageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color activeBorder = const Color(0xFF238C78);
-    final Color inactiveBorder = const Color(0xFF262D30);
-    final Color activeBg = const Color(0xFF0E2623);
-    final Color inactiveBg = const Color(0xFF15191B);
+    final Color activeBorder = kAccent;
+    final Color inactiveBorder = kBorder;
+    final Color activeBg = kCardActive;
+    final Color inactiveBg = kCard;
 
     return SizedBox(
       height: 58,
@@ -41,7 +42,7 @@ class LanguageCard extends StatelessWidget {
               Text(
                 label,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: kText,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -49,7 +50,7 @@ class LanguageCard extends StatelessWidget {
               if (isSelected)
                 Icon(
                   Icons.check,
-                  color: activeBorder,
+                  color: kViolet,
                   size: 20,
                 ),
             ],
