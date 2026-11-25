@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sajilyatra/constants/app_colors.dart';
 import 'package:sajilyatra/view/authentication/login_screen.dart';
+import 'package:sajilyatra/view/driver/shift_setup_screen.dart';
 import 'package:sajilyatra/view/tracking/live_tracking_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   final String role;
+
   const RegisterScreen({super.key, required this.role});
 
   @override
@@ -20,6 +22,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _confirm = TextEditingController();
   bool _hidePassword = true;
 
+  bool get _isDriverRole =>
+      widget.role.toLowerCase().contains('driver') ||
+          widget.role.toLowerCase().contains('conductor');
+
   @override
   void dispose() {
     for (final c in [_name, _email, _phone, _password, _confirm]) {
@@ -30,9 +36,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   InputDecoration _decoration(String label, IconData icon, {Widget? suffix}) {
     OutlineInputBorder border(Color c, [double w = 1.5]) => OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: c, width: w),
-        );
+      borderRadius: BorderRadius.circular(14),
+      borderSide: BorderSide(color: c, width: w),
+    );
     return InputDecoration(
       labelText: label,
       labelStyle: const TextStyle(color: kMuted),
@@ -50,11 +56,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
-    // TODO: send to backend once available.
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: kViolet,
-        content: Text('Welcome aboard, ${_name.text.trim()}!', style: const TextStyle(color: Colors.white)),
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => _isDriverRole
+            ? ShiftSetupScreen(role: widget.role)
+            : const LiveTrackingScreen(),
       ),
     );
   }
@@ -80,22 +88,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Image.asset('assets/images/sajil_logo.png', height: 120),
                 ),
                 const SizedBox(height: 16),
-                const Text('Create account',
-                    style: TextStyle(
-                        color: kText,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold)),
+                const Text(
+                  'Create account',
+                  style: TextStyle(
+                    color: kText,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 8),
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: kViolet.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Text('Registering as ${widget.role}',
-                      style: const TextStyle(
-                          color: kViolet, fontWeight: FontWeight.w600)),
+                  child: Text(
+                    'Registering as ${widget.role}',
+                    style: const TextStyle(
+                      color: kViolet,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 24),
                 TextFormField(
@@ -105,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   textInputAction: TextInputAction.next,
                   decoration: _decoration('Full name', Icons.person_outline),
                   validator: (v) =>
-                      v == null || v.trim().isEmpty ? 'Enter your name' : null,
+                  v == null || v.trim().isEmpty ? 'Enter your name' : null,
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
@@ -116,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   textInputAction: TextInputAction.next,
                   decoration: _decoration('Email', Icons.email_outlined),
                   validator: (v) => RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
-                          .hasMatch(v?.trim() ?? '')
+                      .hasMatch(v?.trim() ?? '')
                       ? null
                       : 'Enter a valid email',
                 ),
@@ -128,7 +143,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.next,
                   decoration: _decoration('Phone number', Icons.phone_outlined),
-                  // Nepal mobile numbers: 10 digits.
                   validator: (v) => RegExp(r'^\d{10}$').hasMatch(v?.trim() ?? '')
                       ? null
                       : 'Enter a 10-digit phone number',
@@ -145,16 +159,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Icons.lock_outline,
                     suffix: IconButton(
                       icon: Icon(
-                          _hidePassword
-                              ? Icons.visibility_off_outlined
-                              : Icons.visibility_outlined,
-                          color: kMuted),
+                        _hidePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: kMuted,
+                      ),
                       onPressed: () =>
                           setState(() => _hidePassword = !_hidePassword),
                     ),
                   ),
                   validator: (v) =>
-                      (v ?? '').length < 6 ? 'At least 6 characters' : null,
+                  (v ?? '').length < 6 ? 'At least 6 characters' : null,
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
@@ -163,9 +178,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   cursorColor: kViolet,
                   obscureText: _hidePassword,
                   decoration:
-                      _decoration('Confirm password', Icons.lock_outline),
+                  _decoration('Confirm password', Icons.lock_outline),
                   validator: (v) =>
-                      v != _password.text ? 'Passwords do not match' : null,
+                  v != _password.text ? 'Passwords do not match' : null,
                 ),
                 const SizedBox(height: 28),
                 SizedBox(
@@ -178,11 +193,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       foregroundColor: kOnAccent,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28)),
+                        borderRadius: BorderRadius.circular(28),
+                      ),
                     ),
-                    child: const Text('Register',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700)),
+                    child: const Text(
+                      'Register',
+                      style:
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -193,17 +211,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const LiveTrackingScreen()),
+                        builder: (_) => const LiveTrackingScreen(),
+                      ),
                     ),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: kText,
                       side: const BorderSide(color: kBorder, width: 1.5),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28)),
+                        borderRadius: BorderRadius.circular(28),
+                      ),
                     ),
-                    child: const Text('Continue as guest',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600)),
+                    child: const Text(
+                      'Continue as guest',
+                      style:
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -219,10 +241,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(color: kMuted),
                         children: [
                           TextSpan(
-                              text: 'Log in',
-                              style: TextStyle(
-                                  color: kViolet,
-                                  fontWeight: FontWeight.bold)),
+                            text: 'Log in',
+                            style: TextStyle(
+                              color: kViolet,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                     ),
