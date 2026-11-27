@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sajilyatra/constants/app_colors.dart';
+import 'package:sajilyatra/view/tracking/live_tracking_screen.dart';
 
 class ShiftSetupScreen extends StatefulWidget {
   final String role;
@@ -31,6 +32,15 @@ class _ShiftSetupScreenState extends State<ShiftSetupScreen> {
         TextPosition(offset: _seatsController.text.length),
       );
     });
+  }
+
+  void _startShift() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const LiveTrackingScreen(showVehicleTypeLabels: false),
+      ),
+    );
   }
 
   @override
@@ -142,6 +152,30 @@ class _ShiftSetupScreenState extends State<ShiftSetupScreen> {
                       iconSize: 28,
                     ),
                   ],
+                ),
+              ),
+              const Spacer(),
+              SizedBox(
+                width: double.infinity,
+                height: 54,
+                child: ElevatedButton.icon(
+                  onPressed: _startShift,
+                  icon: const Icon(Icons.play_arrow_rounded),
+                  label: Text(
+                    'Start shift ($_availableSeats seats open)',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kAccent,
+                    foregroundColor: kOnAccent,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28),
+                    ),
+                  ),
                 ),
               ),
             ],
