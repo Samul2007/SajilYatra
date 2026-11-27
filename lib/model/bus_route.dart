@@ -41,4 +41,20 @@ class BusRoute {
       Stop('Koteshwor', LatLng(27.6788, 85.3495)),
     ],
   );
+
+  static const ratnaparkBhaktapur = BusRoute(
+    vehicleName: 'Micro 5',
+    from: 'Ratnapark',
+    to: 'Bhaktapur',
+    plate: 'Ba 1 Kha 2210',
+    operator: 'Nepal Yatayat Samiti',
+    stops: [
+      Stop('Ratnapark', LatLng(27.7062, 85.3151)),
+      Stop('Baneshwor', LatLng(27.6893, 85.3425)),
+      Stop('Koteshwor', LatLng(27.6788, 85.3495)),
+      Stop('Bhaktapur', LatLng(27.6710, 85.4298)),
+    ],
+  );
+
+  static const all = [kalankiKoteshwor, ratnaparkBhaktapur];
 }

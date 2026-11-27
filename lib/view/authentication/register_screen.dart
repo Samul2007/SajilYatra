@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sajilyatra/constants/app_colors.dart';
 import 'package:sajilyatra/view/authentication/login_screen.dart';
+import 'package:sajilyatra/view/shift/shift_screen.dart';
 import 'package:sajilyatra/view/tracking/live_tracking_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -190,10 +191,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: double.infinity,
                   height: 54,
                   child: OutlinedButton(
+                    // TODO: drivers will need a real account; guests only get the map.
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const LiveTrackingScreen()),
+                          builder: (_) => widget.role == 'Conductor / Driver'
+                              ? const ShiftScreen()
+                              : const LiveTrackingScreen()),
                     ),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: kText,

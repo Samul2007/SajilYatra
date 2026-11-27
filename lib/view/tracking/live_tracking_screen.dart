@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:sajilyatra/constants/app_colors.dart';
@@ -16,6 +18,7 @@ class _LiveTrackingScreenState extends State<LiveTrackingScreen> {
   final _route = BusRoute.kalankiKoteshwor;
   final _map = MapController();
   late final LiveTrackingViewModel _vm;
+  bool _expanded = false; // true = map fills the whole screen
 
   @override
   void initState() {
@@ -80,16 +83,40 @@ class _LiveTrackingScreenState extends State<LiveTrackingScreen> {
                         if (_vm.status != null)
                           Marker(
                             point: _vm.status!.position,
-                            width: 34,
-                            height: 34,
-                            child: Container(
+                            width: 72,
+                            height: 72,
+                            child: Stack(
                               alignment: Alignment.center,
-                              decoration: const BoxDecoration(
-                                  color: kAccent, shape: BoxShape.circle),
-                              child: const Text('M',
-                                  style: TextStyle(
-                                      color: kText,
-                                      fontWeight: FontWeight.w800)),
+                              children: [
+                                if (_vm.bearing != null)
+                                  Transform.rotate(
+                                    angle: _vm.bearing! * pi / 180,
+                                    // Dark arrow with a white outline so it stands out on any map colour.
+                                    child: const Align(
+                                      alignment: Alignment.topCenter,
+                                      child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Icon(Icons.navigation,
+                                              size: 32, color: Colors.white),
+                                          Icon(Icons.navigation,
+                                              size: 24, color: kText),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                Container(
+                                  width: 34,
+                                  height: 34,
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(
+                                      color: kAccent, shape: BoxShape.circle),
+                                  child: const Text('M',
+                                      style: TextStyle(
+                                          color: kText,
+                                          fontWeight: FontWeight.w800)),
+                                ),
+                              ],
                             ),
                           ),
                       ]),
@@ -132,13 +159,31 @@ class _LiveTrackingScreenState extends State<LiveTrackingScreen> {
                     ),
                   ),
                 ),
+                Positioned(
+                  right: 12,
+                  bottom: 28,
+                  child: FloatingActionButton.small(
+                    heroTag: 'expand-map',
+                    backgroundColor: kAccent,
+                    foregroundColor: kOnAccent,
+                    tooltip: _expanded ? 'Show details' : 'Full-screen map',
+                    onPressed: () => setState(() => _expanded = !_expanded),
+                    child: Icon(
+                        _expanded ? Icons.fullscreen_exit : Icons.fullscreen),
+                  ),
+                ),
               ],
             ),
           ),
-          ListenableBuilder(
-            listenable: _vm,
-            builder: (context, _) =>
-                VehicleSheet(route: _route, status: _vm.status),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 250),
+            child: _expanded
+                ? const SizedBox(width: double.infinity)
+                : ListenableBuilder(
+                    listenable: _vm,
+                    builder: (context, _) =>
+                        VehicleSheet(route: _route, status: _vm.status),
+                  ),
           ),
         ],
       ),
