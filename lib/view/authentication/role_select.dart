@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sajilyatra/constants/app_colors.dart';
 import 'package:sajilyatra/view/authentication/register_screen.dart';
 import 'package:sajilyatra/view/authentication/widgets/role_card.dart';
-import 'package:sajilyatra/view/authentication/login_screen.dart';
+import 'package:sajilyatra/view/driver/shift_setup_screen.dart';
 
 class RoleSelectScreen extends StatefulWidget {
   const RoleSelectScreen({super.key});
@@ -14,19 +14,26 @@ class RoleSelectScreen extends StatefulWidget {
 class _RoleSelectScreenState extends State<RoleSelectScreen> {
   String selectedRole = 'Commuter';
 
+  void _onContinue() {
+    final isDriver = selectedRole == 'Conductor / Driver';
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => isDriver
+            ? ShiftSetupScreen(role: selectedRole)
+            : RegisterScreen(role: selectedRole),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: kText,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: kText),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -52,9 +59,7 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                   height: 1.4,
                 ),
               ),
-
               const SizedBox(height: 24),
-
               const Text(
                 'SELECT ROLE',
                 style: TextStyle(
@@ -64,10 +69,7 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                   letterSpacing: 1.1,
                 ),
               ),
-
               const SizedBox(height: 12),
-
-              // Role options
               RoleCard(
                 icon: Icons.directions_bus_outlined,
                 title: 'Commuter',
@@ -115,22 +117,12 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                   });
                 },
               ),
-
               const Spacer(),
-
-              // Continue button
               SizedBox(
                 width: double.infinity,
                 height: 54,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => RegisterScreen(role: selectedRole),
-                      ),
-                    );
-                  },
+                  onPressed: _onContinue,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kAccent,
                     foregroundColor: kOnAccent,
@@ -143,12 +135,11 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                     'Continue',
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
               ),
-
               const SizedBox(height: 12),
             ],
           ),
