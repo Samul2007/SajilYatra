@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyABnMZYCOwDvQ45dYr-3Ob1XxnScLB_gQU',
-    appId: '1:659921040198:android:f8b7f0a1d1d007bc30ab47',
-    messagingSenderId: '659921040198',
-    projectId: 'ai-a-e6cba',
-    storageBucket: 'ai-a-e6cba.firebasestorage.app',
+    apiKey: 'AIzaSyBAMIu1FuNjTM8r5tZJO1B1pdhrdf_vbnQ',
+    appId: '1:819951470359:android:a3f925756715b8e6439952',
+    messagingSenderId: '819951470359',
+    projectId: 'yatayat-1db8d',
+    storageBucket: 'yatayat-1db8d.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCZg95QhJA3uiQJZscnvNAZsDOnPVYq6oM',
-    appId: '1:659921040198:ios:1e67482ded9c72ba30ab47',
-    messagingSenderId: '659921040198',
-    projectId: 'ai-a-e6cba',
-    storageBucket: 'ai-a-e6cba.firebasestorage.app',
+    apiKey: 'AIzaSyAJeFERTX567tiKP65lSMsjU3J0oJi0sfY',
+    appId: '1:819951470359:ios:95c6872372c222ab439952',
+    messagingSenderId: '819951470359',
+    projectId: 'yatayat-1db8d',
+    storageBucket: 'yatayat-1db8d.firebasestorage.app',
     iosBundleId: 'com.example.sajilyatra.sajilyatra',
   );
 }

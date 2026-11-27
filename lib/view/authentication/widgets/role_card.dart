@@ -19,22 +19,17 @@ class RoleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color activeBorder = kAccent;
-    final Color inactiveBorder = kBorder;
-    final Color activeBg = kCardActive;
-    final Color inactiveBg = kCard;
-
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(14),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: isSelected ? activeBg : inactiveBg,
+          color: isSelected ? kViolet.withValues(alpha: 0.08) : kCard,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: isSelected ? activeBorder : inactiveBorder,
-            width: 1.5,
+            color: isSelected ? kViolet : kBorder,
+            width: isSelected ? 2 : 1.5,
           ),
         ),
         child: Row(
@@ -44,15 +39,13 @@ class RoleCard extends StatelessWidget {
               height: 44,
               decoration: BoxDecoration(
                 color: isSelected
-                    ? kAccent
-                    : kBorder,
+                    ? kViolet.withValues(alpha: 0.15)
+                    : kBg,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 icon,
-                color: isSelected
-                    ? kOnAccent
-                    : kMuted,
+                color: isSelected ? kViolet : kMuted,
                 size: 22,
               ),
             ),
@@ -81,7 +74,7 @@ class RoleCard extends StatelessWidget {
               ),
             ),
             if (isSelected)
-              Icon(
+              const Icon(
                 Icons.check_circle,
                 color: kViolet,
                 size: 22,

@@ -16,7 +16,11 @@ import 'package:sajilyatra/view/tracking/widgets/vehicle_sheet.dart';
 import 'package:sajilyatra/viewmodel/live_tracking_viewmodel.dart';
 
 class LiveTrackingScreen extends StatefulWidget {
-  const LiveTrackingScreen({super.key});
+  /// Kept so lib/view/driver/shift_setup_screen.dart (Samul) still compiles.
+  /// shortcut: this map always shows the vehicle-type icons, so it is unused.
+  final bool showVehicleTypeLabels;
+
+  const LiveTrackingScreen({super.key, this.showVehicleTypeLabels = true});
 
   @override
   State<LiveTrackingScreen> createState() => _LiveTrackingScreenState();

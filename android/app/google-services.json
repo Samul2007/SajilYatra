@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "819951470359",
+    "project_id": "yatayat-1db8d",
+    "storage_bucket": "yatayat-1db8d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819951470359:android:a3f925756715b8e6439952",
+        "android_client_info": {
+          "package_name": "com.example.sajilyatra.sajilyatra"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAMIu1FuNjTM8r5tZJO1B1pdhrdf_vbnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
