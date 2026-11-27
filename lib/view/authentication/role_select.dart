@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sajilyatra/constants/app_colors.dart';
 import 'package:sajilyatra/view/authentication/register_screen.dart';
 import 'package:sajilyatra/view/authentication/widgets/role_card.dart';
+import 'package:sajilyatra/view/authentication/login_screen.dart';
 
 class RoleSelectScreen extends StatefulWidget {
   const RoleSelectScreen({super.key});
