@@ -20,26 +20,52 @@ double? nextBearing(VehicleStatus? previous, VehicleStatus now, double? last) {
 
 class LiveTrackingViewModel extends ChangeNotifier {
   LiveTrackingViewModel({
-    required this.route,
+    List<BusRoute>? routes,
     SimulatedVehicleRepository? repository,
-  }) {
-    _sub = (repository ?? SimulatedVehicleRepository()).watch(route).listen(
-      (s) {
-        bearing = nextBearing(status, s, bearing);
-        status = s;
+  }) : routes = routes ?? BusRoute.all {
+    final repo = repository ?? SimulatedVehicleRepository();
+    for (final r in this.routes) {
+      _subs.add(repo.watch(r).listen((s) {
+        bearings[r] = nextBearing(statuses[r], s, bearings[r]);
+        statuses[r] = s;
         notifyListeners();
-      },
-    );
+      }));
+    }
   }
 
-  final BusRoute route;
-  VehicleStatus? status; // null until the first update arrives
-  double? bearing; // null = stationary, no arrow
-  late final StreamSubscription<VehicleStatus> _sub;
+  final List<BusRoute> routes;
+  final statuses = <BusRoute, VehicleStatus>{}; // latest position per vehicle
+  final bearings = <BusRoute, double?>{}; // null = stationary, no arrow
+  final hiddenTypes = <VehicleType>{}; // filtered out by the user
+  final _subs = <StreamSubscription<VehicleStatus>>[];
+
+  /// The vehicle the camera is locked onto (US 4.4); null = free camera.
+  BusRoute? selected;
+
+  bool isVisible(BusRoute r) => !hiddenTypes.contains(r.type);
+
+  void select(BusRoute r) {
+    selected = r;
+    notifyListeners();
+  }
+
+  void release() {
+    if (selected == null) return;
+    selected = null;
+    notifyListeners();
+  }
+
+  void toggleType(VehicleType t) {
+    if (!hiddenTypes.remove(t)) hiddenTypes.add(t);
+    if (selected != null && !isVisible(selected!)) selected = null;
+    notifyListeners();
+  }
 
   @override
   void dispose() {
-    _sub.cancel();
+    for (final s in _subs) {
+      s.cancel();
+    }
     super.dispose();
   }
 }

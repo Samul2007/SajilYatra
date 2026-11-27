@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:sajilyatra/l10n/app_language.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sajilyatra/model/shift.dart';
 
@@ -23,7 +24,7 @@ class GeolocatorShiftRepository implements ShiftRepository {
   @override
   Future<String?> prepare() async {
     if (!await Geolocator.isLocationServiceEnabled()) {
-      return 'Turn on location (GPS) to start your shift.';
+      return trNow('Turn on location (GPS) to start your shift.');
     }
     var permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -31,7 +32,7 @@ class GeolocatorShiftRepository implements ShiftRepository {
     }
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
-      return 'Allow location access to start your shift.';
+      return trNow('Allow location access to start your shift.');
     }
     return null;
   }
@@ -44,9 +45,9 @@ class GeolocatorShiftRepository implements ShiftRepository {
             accuracy: common,
             distanceFilter: 10,
             intervalDuration: const Duration(seconds: 5),
-            foregroundNotificationConfig: const ForegroundNotificationConfig(
-              notificationTitle: 'Sajil Yatra shift active',
-              notificationText: 'Your vehicle location is being shared.',
+            foregroundNotificationConfig: ForegroundNotificationConfig(
+              notificationTitle: trNow('Sajil Yatra shift active'),
+              notificationText: trNow('Your vehicle location is being shared.'),
               enableWakeLock: true,
             ),
           )

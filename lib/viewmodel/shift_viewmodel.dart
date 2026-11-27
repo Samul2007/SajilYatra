@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:sajilyatra/l10n/app_language.dart';
 import 'package:sajilyatra/model/bus_route.dart';
 import 'package:sajilyatra/model/shift.dart';
 import 'package:sajilyatra/repository/shift_repository.dart';
@@ -41,7 +42,7 @@ class ShiftViewModel extends ChangeNotifier {
     if (isActive) return;
     error = null;
     if (!isVerified) {
-      error = 'Only verified conductors can start a shift.';
+      error = trNow('Only verified conductors can start a shift.');
       return notifyListeners();
     }
     error = await _repository.prepare();
@@ -59,7 +60,7 @@ class ShiftViewModel extends ChangeNotifier {
         notifyListeners();
       },
       onError: (_) {
-        error = 'Lost the GPS signal. Check that location is on.';
+        error = trNow('Lost the GPS signal. Check that location is on.');
         notifyListeners();
       },
     );

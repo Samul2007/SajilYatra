@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sajilyatra/view/authentication/login_screen.dart';
+import 'package:sajilyatra/l10n/app_language.dart';
 import 'package:sajilyatra/constants/app_colors.dart';
 import 'package:sajilyatra/view/authentication/role_select.dart';
 import 'package:sajilyatra/view/authentication/widgets/language_card.dart';
@@ -11,8 +13,6 @@ class LanguageSelectScreen extends StatefulWidget {
 }
 
 class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
-  String selectedLanguage = 'English';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +72,8 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               const SizedBox(height: 12),
 
               // Tagline
-              const Text(
-                'Every bus, micro and Safa Tempo in Kathmandu Valley, live on one map.',
+              Text(
+                context.tr('Every bus, micro and Safa Tempo in Kathmandu Valley, live on one map.'),
                 style: TextStyle(
                   color: kMuted,
                   fontSize: 14,
@@ -84,8 +84,8 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               const SizedBox(height: 28),
 
               // Section header
-              const Text(
-                'CHOOSE YOUR LANGUAGE',
+              Text(
+                context.tr('CHOOSE YOUR LANGUAGE'),
                 style: TextStyle(
                   color: kMuted,
                   fontSize: 12,
@@ -99,22 +99,14 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               // Language options
               LanguageCard(
                 label: 'English',
-                isSelected: selectedLanguage == 'English',
-                onTap: () {
-                  setState(() {
-                    selectedLanguage = 'English';
-                  });
-                },
+                isSelected: !AppLanguage.instance.isNepali,
+                onTap: () => AppLanguage.instance.setNepali(false),
               ),
               const SizedBox(height: 12),
               LanguageCard(
                 label: 'नेपाली',
-                isSelected: selectedLanguage == 'नेपाली',
-                onTap: () {
-                  setState(() {
-                    selectedLanguage = 'नेपाली';
-                  });
-                },
+                isSelected: AppLanguage.instance.isNepali,
+                onTap: () => AppLanguage.instance.setNepali(true),
               ),
 
               const Spacer(flex: 4),
@@ -140,8 +132,8 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
                       borderRadius: BorderRadius.circular(28),
                     ),
                   ),
-                  child: const Text(
-                    'Get started',
+                  child: Text(
+                    context.tr('Get started'),
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -156,19 +148,18 @@ class _LanguageSelectScreenState extends State<LanguageSelectScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Already have an account? ',
+                  Text(
+                    context.tr('Already have an account? '),
                     style: TextStyle(
                       color: kMuted,
                       fontSize: 13,
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      // TODO: Navigate to login screen
-                    },
-                    child: const Text(
-                      'Log in',
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => LoginScreen())),
+                    child: Text(
+                      context.tr('Log in'),
                       style: TextStyle(
                         color: kViolet,
                         fontSize: 13,
