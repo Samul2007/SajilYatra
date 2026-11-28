@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sajilyatra/l10n/language_toggle.dart';
+import 'package:sajilyatra/l10n/app_language.dart';
 import 'package:sajilyatra/constants/app_colors.dart';
 import 'package:sajilyatra/view/authentication/register_screen.dart';
 import 'package:sajilyatra/view/authentication/widgets/role_card.dart';
-import 'package:sajilyatra/view/driver/shift_setup_screen.dart';
 
 class RoleSelectScreen extends StatefulWidget {
   const RoleSelectScreen({super.key});
@@ -14,26 +15,20 @@ class RoleSelectScreen extends StatefulWidget {
 class _RoleSelectScreenState extends State<RoleSelectScreen> {
   String selectedRole = 'Commuter';
 
-  void _onContinue() {
-    final isDriver = selectedRole == 'Conductor / Driver';
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => isDriver
-            ? ShiftSetupScreen(role: selectedRole)
-            : RegisterScreen(role: selectedRole),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        foregroundColor: kText,
         elevation: 0,
+        actions: const [LanguageToggle()],
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: kText),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -41,8 +36,8 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Choose your profile',
+              Text(
+                context.tr('Choose your profile'),
                 style: TextStyle(
                   color: kText,
                   fontSize: 28,
@@ -51,17 +46,19 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'Select how you travel or operate in Kathmandu Valley so we can tailor fares and routes for you.',
+              Text(
+                context.tr('Select how you travel or operate in Kathmandu Valley so we can tailor fares and routes for you.'),
                 style: TextStyle(
                   color: kMuted,
                   fontSize: 14,
                   height: 1.4,
                 ),
               ),
+
               const SizedBox(height: 24),
-              const Text(
-                'SELECT ROLE',
+
+              Text(
+                context.tr('SELECT ROLE'),
                 style: TextStyle(
                   color: kMuted,
                   fontSize: 12,
@@ -69,11 +66,14 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                   letterSpacing: 1.1,
                 ),
               ),
+
               const SizedBox(height: 12),
+
+              // Role options
               RoleCard(
                 icon: Icons.directions_bus_outlined,
-                title: 'Commuter',
-                subtitle: 'Regular daily passenger with standard fare',
+                title: context.tr('Commuter'),
+                subtitle: context.tr('Regular daily passenger with standard fare'),
                 isSelected: selectedRole == 'Commuter',
                 onTap: () {
                   setState(() {
@@ -84,8 +84,8 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
               const SizedBox(height: 12),
               RoleCard(
                 icon: Icons.school_outlined,
-                title: 'Student',
-                subtitle: 'Eligible for 45% student fare discount',
+                title: context.tr('Student'),
+                subtitle: context.tr('Eligible for 45% student fare discount'),
                 isSelected: selectedRole == 'Student',
                 onTap: () {
                   setState(() {
@@ -96,8 +96,8 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
               const SizedBox(height: 12),
               RoleCard(
                 icon: Icons.elderly_outlined,
-                title: 'Senior Citizen',
-                subtitle: 'Eligible for senior citizen fare concession',
+                title: context.tr('Senior Citizen'),
+                subtitle: context.tr('Eligible for senior citizen fare concession'),
                 isSelected: selectedRole == 'Senior Citizen',
                 onTap: () {
                   setState(() {
@@ -108,8 +108,8 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
               const SizedBox(height: 12),
               RoleCard(
                 icon: Icons.badge_outlined,
-                title: 'Conductor / Driver',
-                subtitle: 'Share live vehicle location and manage routes',
+                title: context.tr('Conductor / Driver'),
+                subtitle: context.tr('Share live vehicle location and manage routes'),
                 isSelected: selectedRole == 'Conductor / Driver',
                 onTap: () {
                   setState(() {
@@ -117,12 +117,22 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                   });
                 },
               ),
+
               const Spacer(),
+
+              // Continue button
               SizedBox(
                 width: double.infinity,
                 height: 54,
                 child: ElevatedButton(
-                  onPressed: _onContinue,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => RegisterScreen(role: selectedRole),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kAccent,
                     foregroundColor: kOnAccent,
@@ -131,15 +141,16 @@ class _RoleSelectScreenState extends State<RoleSelectScreen> {
                       borderRadius: BorderRadius.circular(28),
                     ),
                   ),
-                  child: const Text(
-                    'Continue',
+                  child: Text(
+                    context.tr('Continue'),
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
               ),
+
               const SizedBox(height: 12),
             ],
           ),

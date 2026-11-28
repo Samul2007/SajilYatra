@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:sajilyatra/l10n/app_language.dart';
 import 'package:sajilyatra/constants/app_colors.dart';
 import 'package:sajilyatra/model/bus_route.dart';
+import 'package:sajilyatra/model/seat_status.dart';
 import 'package:sajilyatra/model/vehicle_status.dart';
 import 'package:sajilyatra/view/tracking/widgets/stat_card.dart';
+import 'package:sajilyatra/view/tracking/widgets/vehicle_marker.dart';
 
 class VehicleSheet extends StatelessWidget {
   final BusRoute route;
   final VehicleStatus? status;
+  final SeatUpdate? seat; // reported by the conductor, null = not reported
 
-  const VehicleSheet({super.key, required this.route, required this.status});
+  const VehicleSheet({
+    super.key,
+    required this.route,
+    required this.status,
+    this.seat,
+  });
+
+  String _hhmm(DateTime t) =>
+      '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +54,11 @@ class VehicleSheet extends StatelessWidget {
                   height: 44,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: kAccent,
+                    color: styleOf(route.type).color,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text('M',
-                      style: TextStyle(
-                          color: kText,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 18)),
+                  child: Icon(styleOf(route.type).icon,
+                      color: styleOf(route.type).onColor),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -57,12 +66,13 @@ class VehicleSheet extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          '${route.vehicleName} · ${route.from} → ${route.to}',
+                          '${context.tr(route.vehicleName)} · ${context.tr(route.from)} → ${context.tr(route.to)}',
                           style: const TextStyle(
                               color: kText,
                               fontSize: 15,
                               fontWeight: FontWeight.w700)),
-                      Text('${route.plate} · ${route.operator}',
+                      Text(
+                          '${context.tr(route.type.label)} · ${context.tr(route.plate)} · ${context.tr(route.operator)}',
                           style: const TextStyle(color: kMuted, fontSize: 12)),
                     ],
                   ),
@@ -81,24 +91,27 @@ class VehicleSheet extends StatelessWidget {
                   Expanded(
                       child: StatCard(
                           icon: Icons.schedule,
-                          value: '${s.etaMinutes} min',
-                          caption: 'ETA to ${s.nextStop.name}')),
+                          value: context.tr('{} min', [s.etaMinutes]),
+                          caption: context.tr('ETA to {}', [context.tr(s.nextStop.name)]))),
                   const SizedBox(width: 10),
                   Expanded(
                       child: StatCard(
                           icon: Icons.speed,
-                          value: '${s.speedKmh.round()} km/h',
+                          value: context.tr('{} km/h', [s.speedKmh.round()]),
                           caption: s.isStanding
-                              ? 'Stopped'
-                              : 'Moving, heading ${s.headingLabel}')),
+                              ? context.tr('Stopped')
+                              : s.speedKmh < 5
+                                  ? context.tr('Stuck in traffic')
+                                  : context.tr('Moving, heading {}',
+                                  [context.tr(s.headingLabel)]))),
                   const SizedBox(width: 10),
                   Expanded(
                       child: StatCard(
                           icon: s.isStanding
                               ? Icons.pause_circle_outline
                               : Icons.play_circle_outline,
-                          value: s.isStanding ? 'At stop' : 'On the way',
-                          caption: 'Updated just now')),
+                          value: context.tr(s.isStanding ? 'At stop' : 'On the way'),
+                          caption: context.tr('Updated just now'))),
                 ],
               ),
               const SizedBox(height: 12),
@@ -113,14 +126,23 @@ class VehicleSheet extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Next: ${s.nextStop.name}',
+                    Text(context.tr('Next: {}', [context.tr(s.nextStop.name)]),
                         style: const TextStyle(
                             color: kText,
                             fontWeight: FontWeight.w700)),
                     if (s.thenStops.isNotEmpty)
                       Text(
-                          'Then ${s.thenStops.map((e) => e.name).join(' · ')}',
+                          context.tr('Then {}', [s.thenStops.map((e) => context.tr(e.name)).join(' · ')]),
                           style: const TextStyle(color: kMuted, fontSize: 12)),
+                    const SizedBox(height: 6),
+                    Text(
+                        seat == null
+                            ? context.tr('Seats: not reported')
+                            : context.tr('Seats: {} · updated {}', [context.tr(seat!.status.label), _hhmm(seat!.updatedAt)]),
+                        style: const TextStyle(
+                            color: kText,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600)),
                   ],
                 ),
               ),
@@ -132,7 +154,7 @@ class VehicleSheet extends StatelessWidget {
               child: ElevatedButton(
                 // TODO: real boarding flow once tickets/payments exist.
                 onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Boarding ${route.vehicleName}')),
+                  SnackBar(content: Text(context.tr('Boarding {}', [context.tr(route.vehicleName)]))),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: kAccent,
@@ -141,7 +163,7 @@ class VehicleSheet extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28)),
                 ),
-                child: const Text('Board this',
+                child: Text(context.tr('Board this'),
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
               ),

@@ -6,6 +6,15 @@ class Stop {
   const Stop(this.name, this.position);
 }
 
+enum VehicleType {
+  bigBus('Big Bus'),
+  microbus('Microbus'),
+  safaTempo('Safa Tempo');
+
+  const VehicleType(this.label);
+  final String label;
+}
+
 class BusRoute {
   final String vehicleName;
   final String from;
@@ -13,6 +22,7 @@ class BusRoute {
   final String plate;
   final String operator;
   final List<Stop> stops;
+  final VehicleType type;
 
   const BusRoute({
     required this.vehicleName,
@@ -21,6 +31,7 @@ class BusRoute {
     required this.plate,
     required this.operator,
     required this.stops,
+    this.type = VehicleType.microbus,
   });
 
   // shortcut: stop coordinates are approximate and joined by straight lines,
@@ -41,4 +52,55 @@ class BusRoute {
       Stop('Koteshwor', LatLng(27.6788, 85.3495)),
     ],
   );
+
+  static const ratnaparkBhaktapur = BusRoute(
+    vehicleName: 'Micro 5',
+    from: 'Ratnapark',
+    to: 'Bhaktapur',
+    plate: 'Ba 1 Kha 2210',
+    operator: 'Nepal Yatayat Samiti',
+    stops: [
+      Stop('Ratnapark', LatLng(27.7062, 85.3151)),
+      Stop('Baneshwor', LatLng(27.6893, 85.3425)),
+      Stop('Koteshwor', LatLng(27.6788, 85.3495)),
+      Stop('Bhaktapur', LatLng(27.6710, 85.4298)),
+    ],
+  );
+
+  static const kalankiRatnapark = BusRoute(
+    vehicleName: 'Bus 21',
+    from: 'Kalanki',
+    to: 'Ratnapark',
+    plate: 'Ba 3 Kha 1102',
+    operator: 'Sajha Yatayat',
+    type: VehicleType.bigBus,
+    stops: [
+      Stop('Kalanki', LatLng(27.6935, 85.2812)),
+      Stop('Kalimati', LatLng(27.6978, 85.2985)),
+      Stop('Tripureshwor', LatLng(27.6944, 85.3139)),
+      Stop('Ratnapark', LatLng(27.7062, 85.3151)),
+    ],
+  );
+
+  static const ratnaparkKoteshwor = BusRoute(
+    vehicleName: 'Tempo 7',
+    from: 'Ratnapark',
+    to: 'Koteshwor',
+    plate: 'Ba 4 Pa 7788',
+    operator: 'Safa Tempo Committee',
+    type: VehicleType.safaTempo,
+    stops: [
+      Stop('Ratnapark', LatLng(27.7062, 85.3151)),
+      Stop('Maitighar', LatLng(27.6945, 85.3235)),
+      Stop('Baneshwor', LatLng(27.6893, 85.3425)),
+      Stop('Koteshwor', LatLng(27.6788, 85.3495)),
+    ],
+  );
+
+  static const all = [
+    kalankiKoteshwor,
+    ratnaparkBhaktapur,
+    kalankiRatnapark,
+    ratnaparkKoteshwor,
+  ];
 }
